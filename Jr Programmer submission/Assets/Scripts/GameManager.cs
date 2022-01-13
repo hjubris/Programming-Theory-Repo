@@ -6,10 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    public titleHandler titleHandler;
 
+    private GameManager Instance;
+    public static GameManager gameManager { get; private set; }
+    // Start is called before the first frame update
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
@@ -18,17 +28,5 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void StartGame()
-    {
-        SceneManager.LoadScene("main");
-    }
-
-    public void QuitGame()
-    {
-#if UNITY_EDITOR
-        EditorApplication.ExitPlaymode();
-#else
-Application.Quit();
-#endif
-    }
+    
 }
